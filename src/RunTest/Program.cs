@@ -63,7 +63,8 @@ namespace RunTest
                 Console.WriteLine(runResult);
             }
 
-            // Write raw data to file
+            // TODO: Open the file instead of creating a new file everytime 
+            // Write data to file (WILL OVERWRITE THE EXISTING FILE)
             SaveToFile("test", ticks, "csv");
             SaveToFile("test", savedResults, "txt");
 
