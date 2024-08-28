@@ -83,7 +83,7 @@ namespace RunTest
         private static void SaveToFile<T>(string filename, IEnumerable<T> data, string format)
         {
             // I'm adding a timestamp so it doesn't overwrite or write more data to a file by accident
-            filename = filename + $" {string.Format(DateTime.Now.ToString()).Replace(':', '.')}"; // You can't use : in filenames
+            filename = filename + $" {(DateTime.Now.ToString()).Replace(':', '.')}"; // You can't use : in filenames
 
             // Makes the filepath before checking the format
             string file = @$".\{filename}.{format}";
