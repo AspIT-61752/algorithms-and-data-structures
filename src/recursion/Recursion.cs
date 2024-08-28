@@ -55,7 +55,7 @@ namespace recursion
             }
             else
             {
-                return (BigInteger) n * (BigInteger) Factorial(n - 1);
+                return (BigInteger) n * Factorial(n - 1);
             }
         }
     }
