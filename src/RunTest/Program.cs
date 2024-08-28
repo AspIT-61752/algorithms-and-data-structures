@@ -9,7 +9,7 @@ namespace RunTest
         {
             Recursion rec = new();
             // Arrange:
-            int runs = 100;                                          // Number of measurements
+            int runs = 1;                                          // Number of measurements
             long[] ticks = new long[runs];                          // Array to hold the measurements
             int elements = 10000000;                                // Number of elements
 
@@ -29,7 +29,8 @@ namespace RunTest
                 Stopwatch stopwatch = new Stopwatch();              // Create stop watch
                 stopwatch.Start();                                  // Start measurement
                 //Array.Sort(array);                                  // PERFORM ALGORITHM
-                rec.FibonacciSequence(24);
+                //rec.FibonacciSequence(10);
+                rec.FactorialSequence(100);
                 stopwatch.Stop();                                   // Stop measurement
 
                 // Measurement presentation:
@@ -45,6 +46,8 @@ namespace RunTest
 
             // Displays the result at the end
             Console.WriteLine("\n\n========== TEST RESULTS ==========\n\n");
+            Console.WriteLine($"{string.Format(" RUN COUNT").PadLeft(15, '=')} | {string
+                .Format(" TICKS").PadLeft(20, '=')} | {string.Format(" TIME SPAN").PadLeft(16, '=')}");
             for (int i = 0; i < ticks.Count(); i++)
             {
                 TimeSpan interval = TimeSpan.FromTicks(ticks[i]);
@@ -53,6 +56,7 @@ namespace RunTest
                 Console.WriteLine(runResult);
             }
 
+            // TODO: Write avg for ticks and time span. Make sure it lines up with the rest of the table
             Console.WriteLine($"Avg: {ticks.Average()}");           // Print average of measurements
             Console.ReadLine();                                     // Keep console open
         }
