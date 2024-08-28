@@ -82,11 +82,17 @@ namespace RunTest
         /// <param name="format"></param>
         private static void SaveToFile<T>(string filename, IEnumerable<T> data, string format)
         {
+            // I'm adding a timestamp so it doesn't overwrite or write more data to a file by accident
+            filename = filename + $" {string.Format(DateTime.Now.ToString()).Replace(':', '.')}"; // You can't use : in filenames
+
             // Makes the filepath before checking the format
             string file = @$".\{filename}.{format}";
             switch (format.ToLower())
             {
                 case "csv":
+                    // Fallthrough is intentional
+                    // Instead of writing a method or writing the same thing twice, I just removed the break; statement
+                case "txt":
                     using (var stream = File.CreateText(file))
                     {
                         foreach (var row in data)
@@ -96,18 +102,9 @@ namespace RunTest
                         stream.Close();
                     }
                     break;
-                case "txt":
-                    using (var stream = File.CreateText(file))
-                    {
-                        foreach (var item in data)
-                        {
-                            stream.WriteLine(item);
-                        }
-                        stream.Close();
-                    }
-                    break;
                 default:
                     format = "txt";
+                    // TODO: Write to .txt
                     break;
             }
         }
