@@ -90,7 +90,10 @@ namespace RunTest
             filename = filename + $" {(DateTime.Now.ToString()).Replace(':', ';')}"; // You can't use : in filenames
 
             // Makes the filepath before checking the format
-            string file = @$".\{filename}.{format}";
+            string file = @$".\saved data\{filename}.{format}";
+            FileInfo fInfo = new(file);
+            fInfo.Directory.Create();
+
             switch (format.ToLower())
             {
                 case "csv":
