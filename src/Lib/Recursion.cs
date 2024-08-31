@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace lib
+namespace Lib
 {
     public class Recursion
     {

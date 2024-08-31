@@ -1,5 +1,4 @@
-﻿using lib;
-using Lib;
+﻿using Lib;
 using System.ComponentModel;
 using System.Diagnostics;
 
@@ -12,44 +11,40 @@ namespace RunTest
             Recursion rec = new();
             TimeSpaceComplexity tsComplex = new();
             string testName = "";
+
             // Arrange:
             int runs = 1;                                          // Number of measurements
             List<long> ticks = new();                          // Array to hold the measurements
-            //int elements = 10000000;                                // Number of elements
 
             // Generate data:
             //for (int i = 0; i < runs; i++)                          // Loop for each run
             for (int i = 10; i < 1000000000; i *= 10)               // 10, 100, 1000, etc.
             {
-                Random generator = new Random();                    // Random number generator
-                //int[] array = new int[elements];                    // Array to hold the generated numbers
-                int[] array = new int[i];
-                for (int j = 0; j < array.Length - 1; j++)          // Loop for each generated number
+
+                WorstCase testData = new();
+
+                int[] arr = testData.Linear(i);
+
+                for (int j = 0; j < 25; j++)
                 {
-                    array[j] = generator.Next(0, Int32.MaxValue);   // Save generated number to array entry  
+                    Console.WriteLine($"arr[{j}]: {arr[j]}");
                 }
 
                 Console.WriteLine($"\n=== Test : {i.ToString()}\n");
 
                 // Measure:
                 testName = $"TimeSpaceComplexity";                 // The name of the file
-                //testName = $"Fibonacci Sequence (20) [ {i} ]";                 // The name of the file
+
                 Stopwatch stopwatch = new Stopwatch();              // Create stop watch
                 stopwatch.Start();                                  // Start measurement
                 //Array.Sort(array);                                  // PERFORM ALGORITHM
                 //rec.FibonacciSequence(20);
-                rec.FactorialSequence(2);
+                //rec.FactorialSequence(2);
                 stopwatch.Stop();                                   // Stop measurement
 
-                // Measurement presentation:
-                long measuredTicks = stopwatch.Elapsed.Ticks;       // Save measurement
-
-                //TimeSpan interval = TimeSpan.FromTicks(measuredTicks);
-                //string intervalString = interval.ToString();
-
-                ticks.Add(measuredTicks);                           // Save measurements
-                //string runResult = $"Run {i + 1}\t: {measuredTicks} : {intervalString}"; // Textual measurement
-                //Console.WriteLine(runResult);                       // Print mesurement
+                // Save mesurements
+                long measuredTicks = stopwatch.Elapsed.Ticks;
+                ticks.Add(measuredTicks);
             }
 
             // Displays the result at the end
