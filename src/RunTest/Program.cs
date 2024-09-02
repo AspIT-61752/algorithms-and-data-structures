@@ -25,12 +25,13 @@ namespace RunTest
 
                 WorstCase testData = new();
 
-                int[] arr = testData.Linear(i);
+                //int[] arr = testData.Linear(i);
+                int[] arr = testData.Between(0, 10000, i);
 
                 Console.WriteLine($"\n=== Test : {i.ToString()}\n");
 
                 // Measure:
-                testName = $"TimeSpaceComplexity";                 // The name of the file
+                testName = $"{nameof(tsComplex.Contains)}";                 // The name of the file
 
                 Stopwatch stopwatch = new Stopwatch();              // Create stop watch
                 stopwatch.Start();                                  // Start measurement
@@ -38,7 +39,8 @@ namespace RunTest
                 //rec.FibonacciSequence(20);
                 //rec.FactorialSequence(2);
                 //Console.WriteLine($"Sum of arr[{i}]: {tsComplex.SumOf(arr)}");
-                tsComplex.SumOf(arr);
+                //tsComplex.Find(arr, (int)0.5 * i);
+                tsComplex.Contains(arr, 11000); // Make a worst case. Rand between 1 - 100, 102
                 stopwatch.Stop();                                   // Stop measurement
 
                 // Save mesurements

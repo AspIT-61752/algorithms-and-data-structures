@@ -40,5 +40,18 @@ namespace Lib
 
             return arr;
         }
+
+        public int[] Between(int min, int max, int arraySize)
+        {
+            int[] arr = new int[arraySize];
+            Random random = new Random();
+
+            for (int i = 0; i < arraySize; i++)
+            {
+                arr[i] = random.Next(min, max);
+            }
+
+            return arr;
+        }
     }
 }

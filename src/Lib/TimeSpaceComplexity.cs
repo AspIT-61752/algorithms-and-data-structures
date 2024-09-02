@@ -35,7 +35,6 @@ namespace Lib
         // Verify with concrete code
         // make a visual graph of the measurements
         // conclude if your calculated time complexity matches your measurements
-        // TODO: TEST THIS
         public T Find<T>(T[] arr, int index)
         {
             return arr[index];
@@ -47,7 +46,6 @@ namespace Lib
         // Verify with concrete code
         // make a visual graph of the measurements
         // conclude if your calculated time complexity matches your measurements
-        // TODO: TEST THIS
         public bool Contains<T>(T[] arr, T value)
         {
             foreach (var item in arr)
@@ -71,20 +69,42 @@ namespace Lib
         public T[] RemoveAt<T>(T[] arr, int indexToRemove)
         {
             // Because this is an array and not something like a List, I have to make a new array that's smaller to completly remove it.
-            T[] temp = new T[arr.Length-1];
-            for (int i = 0; i < arr.Length; i++)
+            T[] res = new T[arr.Length-1];
+            for (int i = 0; i < res.Length; i++)
             {
-                if (i == indexToRemove)
+                if (i < indexToRemove)
                 {
-                    temp[i] = arr[i];
+                    res[i] = arr[i];
                 }
                 else
                 {
-                    temp[i-1] = arr[i];
+                    res[i] = arr[i+1];
                 }
             }
 
-            return temp;
+            return res;
+        }
+
+        // Calculate O from the pseudocode:
+        //      TC: O(n) or O(n log(n))
+        //      SC: O(1) or O(2)
+        // Verify with concrete code
+        // make a visual graph of the measurements
+        // conclude if your calculated time complexity matches your measurements
+        // TODO: TEST THIS
+        public T[] RemoveByValue<T>(T[] arr, T value)
+        {
+            List<T> temp = new();
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (!value.Equals(arr[i]))
+                {
+                    temp.Add(arr[i]);
+                }
+            }
+
+            T[] res = temp.ToArray();
+            return res;
         }
     }
 }
