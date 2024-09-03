@@ -20,7 +20,8 @@ namespace RunTest
 
             // Generate data:
             //for (int i = 0; i < runs; i++)                          // Loop for each run
-            for (int i = 1; i < 1000000000; i *= 10)               // 10, 100, 1000, etc.
+            //for (int i = 1; i < 1000000000; i *= 10)               // 10, 100, 1000, etc.
+            for (int i = 1; i < 10000000; i *= 10)               // 10, 100, 1000, etc. I want my CPU and RAM to survive
             {
 
                 WorstCase testData = new();
@@ -31,7 +32,7 @@ namespace RunTest
                 Console.WriteLine($"\n=== Test : {i.ToString()}\n");
 
                 // Measure:
-                testName = $"{nameof(tsComplex.Contains)}";                 // The name of the file
+                testName = $"{nameof(tsComplex.Matching)} multithreading";                 // The name of the file
 
                 Stopwatch stopwatch = new Stopwatch();              // Create stop watch
                 stopwatch.Start();                                  // Start measurement
@@ -40,8 +41,13 @@ namespace RunTest
                 //rec.FactorialSequence(2);
                 //Console.WriteLine($"Sum of arr[{i}]: {tsComplex.SumOf(arr)}");
                 //tsComplex.Find(arr, (int)0.5 * i);
-                tsComplex.Contains(arr, 11000); // Make a worst case. Rand between 1 - 100, 102
+                //tsComplex.Contains(arr, 11000);
+                //arr = tsComplex.RemoveAt(arr, 1 * i);
+                //arr = tsComplex.RemoveByValue(arr, 99);
+                arr = tsComplex.Matching(arr, arr);
                 stopwatch.Stop();                                   // Stop measurement
+
+                Console.WriteLine($"Array size: {arr.Length}"); // Used to check the size of RemoveAt and RemoveByValue
 
                 // Save mesurements
                 long measuredTicks = stopwatch.Elapsed.Ticks;

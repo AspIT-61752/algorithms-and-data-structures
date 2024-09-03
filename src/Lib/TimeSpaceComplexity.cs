@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.Collections;
+using System.Numerics;
 using System.Text.RegularExpressions;
 
 namespace Lib
@@ -65,7 +66,6 @@ namespace Lib
         // Verify with concrete code
         // make a visual graph of the measurements
         // conclude if your calculated time complexity matches your measurements
-        // TODO: TEST THIS
         public T[] RemoveAt<T>(T[] arr, int indexToRemove)
         {
             // Because this is an array and not something like a List, I have to make a new array that's smaller to completly remove it.
@@ -91,7 +91,6 @@ namespace Lib
         // Verify with concrete code
         // make a visual graph of the measurements
         // conclude if your calculated time complexity matches your measurements
-        // TODO: TEST THIS
         public T[] RemoveByValue<T>(T[] arr, T value)
         {
             List<T> temp = new();
@@ -104,6 +103,78 @@ namespace Lib
             }
 
             T[] res = temp.ToArray();
+            return res;
+        }
+
+        // Calculate O from the pseudocode:
+        //      TC: O(2^n)
+        //      SC: O(1)
+        // Verify with concrete code
+        // make a visual graph of the measurements
+        // conclude if your calculated time complexity matches your measurements
+        public T[] Matching<T>(T[] arr, T[] arr2)
+        {
+            //List<T> res = new();
+
+            // Split the arrays in 4
+            // Do this but 4 times faster
+            // Add to 1 list at the end
+            // Profit?
+            List<T> res;
+
+            List<T> arrList1 = arr.ToList();
+            List<T> arr2List1 = arr2.ToList();
+
+            if (arr.Length > 1 && arr2.Length > 1)
+            {
+                int chunkSize = (int)Math.Ceiling(arrList1.Count / 4.0);
+
+                List<T> arrListChunk1 = arrList1.GetRange(0, chunkSize);
+                List<T> arrListChunk2 = arrList1.GetRange(chunkSize, Math.Min(chunkSize, arrList1.Count - chunkSize));
+                List<T> arrListChunk3 = arrList1.GetRange(chunkSize * 2, Math.Min(chunkSize, arrList1.Count - chunkSize * 2));
+                List<T> arrListChunk4 = arrList1.GetRange(chunkSize * 3, Math.Min(chunkSize, arrList1.Count - chunkSize * 3));
+
+                List<T> arr2ListChunk1 = arr2List1.GetRange(0, chunkSize);
+                List<T> arr2ListChunk2 = arr2List1.GetRange(chunkSize, Math.Min(chunkSize, arr2List1.Count - chunkSize));
+                List<T> arr2ListChunk3 = arr2List1.GetRange(chunkSize * 2, Math.Min(chunkSize, arr2List1.Count - chunkSize * 2));
+                List<T> arr2ListChunk4 = arr2List1.GetRange(chunkSize * 3, Math.Min(chunkSize, arr2List1.Count - chunkSize * 3));
+
+                var mChunkTask1 = Task.Run(() => arrListChunk1 = MatchingChunk(arrListChunk1, arr2ListChunk1));
+                var mChunkTask2 = Task.Run(() => arrListChunk2 = MatchingChunk(arrListChunk2, arr2ListChunk2));
+                var mChunkTask3 = Task.Run(() => arrListChunk3 = MatchingChunk(arrListChunk3, arr2ListChunk3));
+                var mChunkTask4 = Task.Run(() => arrListChunk4 = MatchingChunk(arrListChunk4, arr2ListChunk4));
+
+                Task.WaitAll(mChunkTask1, mChunkTask2, mChunkTask3, mChunkTask4);
+
+                // Combine the lists
+                res = new List<T>(arrListChunk1.Count + arrListChunk2.Count + arrListChunk3.Count + arrListChunk4.Count);
+                res.AddRange(arrListChunk1);
+                res.AddRange(arrListChunk2);
+                res.AddRange(arrListChunk3);
+                res.AddRange(arrListChunk4);
+            }
+            else
+            {
+                res = MatchingChunk(arr.ToList(), arr2.ToList());
+            }
+
+            return res.ToArray();
+        }
+
+        private List<T> MatchingChunk<T>(List<T> arr, List<T> arr2)
+        {
+            List<T> res = new();
+
+            foreach (var item in arr)
+            {
+                for (int i = 0; i < arr2.Count; i++)
+                {
+                    if (arr2[i].Equals(item))
+                    {
+                        res.Add(item);
+                    }
+                }
+            }
             return res;
         }
     }
